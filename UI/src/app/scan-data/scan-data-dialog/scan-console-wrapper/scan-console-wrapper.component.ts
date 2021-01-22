@@ -1,5 +1,8 @@
 import { Component, Input, ViewChild } from '@angular/core';
-import { AbstractConsoleWrapperComponent } from '../../shared/scan-console-wrapper/abstract-console-wrapper.component';
+import {
+  AbstractConsoleWrapperComponent,
+  ScanStatus
+} from '../../shared/scan-console-wrapper/abstract-console-wrapper.component';
 import { ScanDataUploadService } from '../../../services/scan-data-upload.service';
 import { base64ToFileAsObservable, getBase64Header, MediaType } from '../../../services/utilites/base64-util';
 import { saveAs } from 'file-saver';
@@ -32,7 +35,15 @@ export class ScanConsoleWrapperComponent extends AbstractConsoleWrapperComponent
       .subscribe(() => this.close.emit());
   }
 
-  onFinish(base64: string) {
-    this.result = getBase64Header(MediaType.XLSX) + base64;
+  onFinish(status: ScanStatus, base64: string) {
+    this.status = status;
+
+    if (this.status === ScanStatus.FINISHED) {
+      this.result = getBase64Header(MediaType.XLSX) + base64;
+    }
+  }
+
+  onClose() {
+    this.close.emit();
   }
 }

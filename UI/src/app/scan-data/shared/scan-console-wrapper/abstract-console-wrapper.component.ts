@@ -2,7 +2,15 @@ import { EventEmitter, Input, Output, ViewChild } from '@angular/core';
 import { AbstractScanDataConsoleComponent } from './scan-data-console/abstract-scan-data-console.component';
 import { WebsocketParams } from '../../model/websocket-params';
 
+export enum ScanStatus {
+  PROCESSING,
+  FINISHED,
+  ERROR
+}
+
 export abstract class AbstractConsoleWrapperComponent {
+
+  status: ScanStatus = ScanStatus.PROCESSING;
 
   result: string;
 

@@ -8,6 +8,7 @@ import { takeUntil } from 'rxjs/operators';
 import { BaseComponent } from '../../base/base.component';
 import { WebsocketParams } from '../../../model/websocket-params';
 import { WebsocketService } from '../../../../websocket/webscoket.service';
+import { ScanStatus } from '../abstract-console-wrapper.component';
 
 export abstract class AbstractScanDataConsoleComponent extends BaseComponent implements OnInit {
 
@@ -22,7 +23,7 @@ export abstract class AbstractScanDataConsoleComponent extends BaseComponent imp
   params: WebsocketParams;
 
   @Output()
-  finish = new EventEmitter<string>();
+  finish = new EventEmitter<{status: ScanStatus, payload?: any}>();
 
   @ViewChild('console')
   private console: ElementRef;

@@ -1,10 +1,10 @@
 <div class="console-wrapper">
 
   <app-cdm-scan-data-console [params]="params"
-                             (finish)="onFinish($event)"></app-cdm-scan-data-console>
+                             (finish)="onFinish($event.status)"></app-cdm-scan-data-console>
 
   <div class="console-wrapper__action">
-    <ng-container *ngIf="result; then scanningFinishedBlock; else scanningBlock"></ng-container>
+    <ng-container *ngIf="status === 1; then scanningFinishedBlock; else scanningBlock"></ng-container>
 
     <ng-template #scanningFinishedBlock>
       <button class="console-wrapper__action-back cancel" (click)="onBack()">Back</button>

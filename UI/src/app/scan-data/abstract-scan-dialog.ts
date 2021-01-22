@@ -1,12 +1,17 @@
 import { MatDialogRef } from '@angular/material/dialog';
 import { WebsocketParams } from './model/websocket-params';
-import { AbstractConsoleWrapperComponent } from './shared/scan-console-wrapper/abstract-console-wrapper.component';
+import {
+  AbstractConsoleWrapperComponent,
+  ScanStatus
+} from './shared/scan-console-wrapper/abstract-console-wrapper.component';
+
+export const formIndex = 0;
 
 export abstract class AbstractScanDialog {
 
   websocketParams: WebsocketParams;
 
-  private selectedIndex = 0;
+  private selectedIndex = formIndex;
 
   abstract consoleWrapperComponent: AbstractConsoleWrapperComponent;
 
@@ -22,18 +27,22 @@ export abstract class AbstractScanDialog {
     return this.selectedIndex;
   }
 
+  get isNotScanning() {
+    return this.selectedIndex === 0 || this.consoleWrapperComponent.status === ScanStatus.FINISHED;
+  }
+
   onClose(): void {
     this.dialogRef.close();
   }
 
   onCloseByDagger() {
-    if (this.selectedIndex === 0 || this.consoleWrapperComponent.result) {
+    if (this.isNotScanning) {
       this.onClose();
     }
   }
 
   onCancel(): void {
-    this.index = 0;
+    this.index = formIndex;
   }
 
   protected abstract changeSize();

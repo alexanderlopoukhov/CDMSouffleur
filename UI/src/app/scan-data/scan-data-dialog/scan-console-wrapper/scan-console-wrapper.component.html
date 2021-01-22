@@ -1,12 +1,16 @@
 <div class="console-wrapper">
 
   <app-white-rabbit-scan-data-console style="width: 100%" [params]="params"
-                                      (finish)="onFinish($event)"></app-white-rabbit-scan-data-console>
+                                      (finish)="onFinish($event.status, $event.payload)"></app-white-rabbit-scan-data-console>
 
-  <div class="console-wrapper__action">
-    <ng-container *ngIf="result; then scanningFinishedBlock; else scanningBlock"></ng-container>
+  <ng-container [ngSwitch]="status">
+    <div *ngSwitchCase="0" class="console-wrapper__action">
+      <button class="console-wrapper__action-abort"
+              (click)="onAbortAndCancel()">Abort and cancel
+      </button>
+    </div>
 
-    <ng-template #scanningFinishedBlock>
+    <div *ngSwitchCase="1" class="console-wrapper__action">
       <button class="console-wrapper__action-back cancel"
               (click)="onBack()">Back
       </button>
@@ -16,12 +20,16 @@
       <button class="console-wrapper__action-link confirm"
               (click)="onUploadReport()">Link tables
       </button>
-    </ng-template>
+    </div>
 
-    <ng-template #scanningBlock>
-      <button class="console-wrapper__action-abort"
-              (click)="onAbortAndCancel()">Abort and cancel
+    <div *ngSwitchCase="2" class="console-wrapper__action close">
+      <button class="console-wrapper__action-back cancel"
+              (click)="onBack()">Back
       </button>
-    </ng-template>
-  </div>
+
+      <button class="console-wrapper__action-back confirm"
+              (click)="onClose()">Close
+      </button>
+    </div>
+  </ng-container>
 </div>

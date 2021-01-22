@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AbstractScanDataConsoleComponent } from './abstract-scan-data-console.component';
 import { CdmBuilderWebsocketService } from '../../../../websocket/cdm-builder/cdm-builder-websocket.service';
 import { CdmProgressNotification, ProgressNotificationStatusCode } from '../../../model/progress-notification';
+import { ScanStatus } from '../abstract-console-wrapper.component';
 
 @Component({
   selector: 'app-cdm-scan-data-console',
@@ -25,12 +26,17 @@ export class CdmScanDataConsoleComponent extends AbstractScanDataConsoleComponen
 
     switch (notification.status) {
       case ProgressNotificationStatusCode.FINISHED: {
-        this.finish.emit('Finished');
+        this.finish.emit({
+          status: ScanStatus.FINISHED
+        });
         break;
       }
       case ProgressNotificationStatusCode.FAILED: {
         this.progressValue = 0;
         this.websocketService.disconnect();
+        this.finish.emit({
+          status: ScanStatus.ERROR
+        });
         break;
       }
     }

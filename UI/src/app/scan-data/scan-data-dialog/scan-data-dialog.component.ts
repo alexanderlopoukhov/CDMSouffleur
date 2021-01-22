@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { AbstractScanDialog } from '../abstract-scan-dialog';
+import { AbstractScanDialog, formIndex } from '../abstract-scan-dialog';
 import { ScanConsoleWrapperComponent } from './scan-console-wrapper/scan-console-wrapper.component';
 import { WebsocketParams } from '../model/websocket-params';
 
@@ -16,6 +16,8 @@ export class ScanDataDialogComponent extends AbstractScanDialog {
 
   dbName: string;
 
+  private readonly consoleIndex = 1;
+
   constructor(dialogRef: MatDialogRef<ScanDataDialogComponent>) {
     super(dialogRef);
   }
@@ -24,11 +26,11 @@ export class ScanDataDialogComponent extends AbstractScanDialog {
     const {dbName, params} = payload;
     this.dbName = dbName;
     this.websocketParams = params;
-    this.index = 1;
+    this.index = this.consoleIndex;
   }
 
   protected changeSize() {
-    if (this.index === 0) {
+    if (this.index === formIndex) {
       this.dialogRef.updateSize('700px', '674px');
     } else {
       this.dialogRef.updateSize('613px', '478px');

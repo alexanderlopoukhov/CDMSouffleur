@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { AbstractScanDialog } from '../abstract-scan-dialog';
+import { AbstractScanDialog, formIndex } from '../abstract-scan-dialog';
 import { StoreService } from '../../services/store.service';
 import { fileToBase64 } from '../../services/utilites/base64-util';
 import { whiteRabbitWebsocketConfig } from '../scan-data.constants';
@@ -15,6 +15,8 @@ export class FakeDataDialogComponent extends AbstractScanDialog {
 
   @ViewChild(FakeConsoleWrapperComponent)
   consoleWrapperComponent: FakeConsoleWrapperComponent;
+
+  private readonly fakeDataConsoleIndex = 1;
 
   constructor(dialogRef: MatDialogRef<FakeDataDialogComponent>, private storeService: StoreService) {
     super(dialogRef);
@@ -36,11 +38,11 @@ export class FakeDataDialogComponent extends AbstractScanDialog {
       resultDestination: '/user/queue/fake-data'
     };
 
-    this.index = 1;
+    this.index = this.fakeDataConsoleIndex;
   }
 
   protected changeSize() {
-    if (this.index === 0) {
+    if (this.index === formIndex) {
       this.dialogRef.updateSize('265px', '280px');
     } else {
       this.dialogRef.updateSize('613px', '478px');

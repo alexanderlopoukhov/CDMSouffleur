@@ -1,5 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
-import { AbstractConsoleWrapperComponent } from '../../shared/scan-console-wrapper/abstract-console-wrapper.component';
+import {
+  AbstractConsoleWrapperComponent,
+  ScanStatus
+} from '../../shared/scan-console-wrapper/abstract-console-wrapper.component';
 import { WhiteRabbitScanDataConsoleComponent } from '../../shared/scan-console-wrapper/scan-data-console/white-rabbit-scan-data-console.component';
 
 @Component({
@@ -16,7 +19,7 @@ export class FakeConsoleWrapperComponent extends AbstractConsoleWrapperComponent
     this.close.emit();
   }
 
-  onFinish(result) {
-    this.result = result;
+  onFinish(status: ScanStatus) {
+    this.status = status;
   }
 }

@@ -3,6 +3,7 @@ import { AbstractScanDataConsoleComponent } from './abstract-scan-data-console.c
 import { WhiteRabbitWebsocketService } from '../../../../websocket/white-rabbit/white-rabbit-websocket.service';
 import { takeUntil } from 'rxjs/operators';
 import { ProgressNotification, ProgressNotificationStatusCode } from '../../../model/progress-notification';
+import { ScanStatus } from '../abstract-console-wrapper.component';
 
 @Component({
   selector: 'app-white-rabbit-scan-data-console',
@@ -49,6 +50,9 @@ export class WhiteRabbitScanDataConsoleComponent extends AbstractScanDataConsole
       case ProgressNotificationStatusCode.FAILED: {
         this.progressValue = 0;
         this.websocketService.disconnect();
+        this.finish.emit({
+          status: ScanStatus.ERROR
+        });
         break;
       }
     }
@@ -62,7 +66,10 @@ export class WhiteRabbitScanDataConsoleComponent extends AbstractScanDataConsole
       )
       .subscribe(result => {
         this.websocketService.disconnect();
-        this.finish.emit(result);
+        this.finish.emit({
+          status: ScanStatus.FINISHED,
+          payload: result
+        });
       });
   }
 }
