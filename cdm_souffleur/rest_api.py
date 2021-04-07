@@ -16,12 +16,20 @@ from flask import Blueprint
 from cdm_souffleur.vocab_search_api import vocab_search_api
 from cdm_souffleur.authorization_api import authorization_api
 from cdm_souffleur.model.user import *
+from cdm_souffleur.model.UsagiAnalyzer import *
+import lucene
+from org.apache.pylucene.analysis import PythonAnalyzer
+from cdm_souffleur.services.UsagiSearchEngine import *
 
 CORS(app)
 app.config['UPLOAD_FOLDER'] = UPLOAD_SOURCE_SCHEMA_FOLDER
 app.secret_key = 'mdcr'
+lucene.initVM(vmargs=['-Djava.awt.headless=true'])
+
 
 bp = Blueprint('bp', __name__, url_prefix=app.config["CDM_SOUFFLEUR_PREFIX"])
+
+
 
 @app.before_request
 def before_request():
@@ -34,6 +42,16 @@ def after_request(response):
     if not pg_db.is_closed():
         pg_db.close()
     return response
+
+
+@bp.route('/api/test', methods=['GET', 'POST'])
+def test_usagi():
+    """save source schema to server side"""
+    try:
+        createNewMainIndex()
+    except InvalidUsage as e:
+        raise e
+    return jsonify(success=True)
 
 
 @bp.route('/api/load_schema', methods=['GET', 'POST'])
