@@ -61,5 +61,16 @@ export class MatchScoreGridComponent extends SelectableGridComponent<CodeMapping
     this.sourceDisplayedColumns = ['__select__', ...this.sourceColumns.map(columnToField)]
     this.matchScoreDisplayedColumns = [columnToField(this.matchScoreColumn)]
     this.targetDisplayedColumns = [...this.targetColumns.map(columnToField)]
+
+    this.columns = [
+      ...this.sourceColumns,
+      this.matchScoreColumn,
+      ...this.targetColumns
+    ]
+    this.displayedColumns = [
+      ...this.sourceDisplayedColumns,
+      ...this.matchScoreDisplayedColumns,
+      ...this.targetDisplayedColumns
+    ]
   }
 }

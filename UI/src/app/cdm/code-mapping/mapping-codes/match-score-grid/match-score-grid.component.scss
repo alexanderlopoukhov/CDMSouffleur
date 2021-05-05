@@ -6,13 +6,7 @@
     display: flex;
     justify-content: space-between;
     height: 100%;
-    overflow-y: auto;
-
-    .source-grid-wrapper,
-    .target-grid-wrapper {
-      overflow-x: auto;
-      overflow-y: hidden;
-    }
+    overflow: auto;
 
     .source-grid-wrapper {
       width: calc(44% - 100px); // 100px - match score grid width + margin
@@ -34,7 +28,6 @@
 
     .match-score-column,
     .match-score-cell {
-      margin-right: 9px;
     }
 
     .match-score-cell {

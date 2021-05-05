@@ -73,9 +73,14 @@ $row-height: 32px;
 
     &:nth-child(2n) {
       background-color: #fff;
+
     }
 
-    background-color: rgba(6, 107, 187, 0.05);
+    background-color: rgba(6, 107, 187, 0.04);
+
+    .sticky-cell {
+      background-color: rgba(6, 107, 187, 0.05);
+    }
 
     .cell {
       word-wrap: break-word;
