@@ -35,7 +35,7 @@
     "ngx-mat-select-search": "^3.0.1",
     "ngx-trim-directive": "^1.1.0",
     "pako": "^1.0.10",
-    "prismjs": "^1.23.0",
+    "prismjs": "^1.24.0",
     "rxjs": "~6.6.0",
     "sockjs-client": "^1.5.0",
     "stompjs": "^2.3.3",
